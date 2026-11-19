@@ -15,33 +15,34 @@ export const links = {
 
 export const chapters = [
   { id: "intro", label: "Introduction", nav: "intro" },
+  { id: "about", label: "About Nidhi", nav: "about" },
   { id: "work", label: "Prep N Print", nav: "work" },
-  { id: "daily-digest", label: "Daily Digest", nav: "work" },
-  { id: "study-buddy", label: "Study Buddy", nav: "work" },
   { id: "research-enso", label: "ENSO research", nav: "research" },
   { id: "research-jasmonic", label: "Jasmonic acid modeling", nav: "research" },
   { id: "research-crypto", label: "Financial mathematics", nav: "research" },
   { id: "research-graduation", label: "Graduation gaps", nav: "research" },
-  { id: "about", label: "About Nidhi", nav: "about" },
-  { id: "principles", label: "How I work", nav: "about" },
+  { id: "daily-digest", label: "Daily Digest", nav: "projects" },
+  { id: "study-buddy", label: "Study Buddy", nav: "projects" },
   { id: "contact", label: "Contact", nav: "contact" },
 ] as const;
 
 export const navigation = [
-  { label: "Work", chapterIndex: 1, group: "work" },
-  { label: "Research", chapterIndex: 4, group: "research" },
-  { label: "About", chapterIndex: 8, group: "about" },
-  { label: "Contact", chapterIndex: 10, group: "contact" },
+  { label: "About", chapterIndex: 1, group: "about" },
+  { label: "Work", chapterIndex: 2, group: "work" },
+  { label: "Research", chapterIndex: 3, group: "research" },
+  { label: "Projects", chapterIndex: 7, group: "projects" },
+  { label: "Contact", chapterIndex: 9, group: "contact" },
 ] as const;
 
 export const dailyDigestStudy = {
   slug: "daily-digest",
   eyebrow: "GenAI application · Independent project",
   title: "Daily Digest",
-  dek: "An evidence-first research system that turns current information into inspectable research leads for long-term investors.",
+  dek: "A research pipeline that keeps every generated claim connected to its evidence, limitations, and contradictions.",
   summary:
-    "Daily Digest combines curated sources and market observations into structured claims, themes, contradictions, limitations, and questions worth investigating.",
-  role: "Product design, frontend, backend, AI workflow, and infrastructure",
+    "Long-term research becomes difficult to trust when an AI answer hides its sources or compresses disagreement into one confident response. Daily Digest turns curated sources and market observations into claims that remain inspectable throughout the workflow.",
+  role: "Designed and built the product, frontend, backend, AI workflow, and infrastructure",
+  status: "Live product",
   stack: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Alembic", "OpenAI"],
   image: "/projects/daily-digest/daily-digest.png",
   imageAlt:
@@ -50,22 +51,28 @@ export const dailyDigestStudy = {
   demo: links.dailyDigestDemo,
   sections: [
     {
-      label: "Why",
+      label: "Problem",
       title: "Research needs a trail, not just an answer.",
       body:
         "The product is designed for long-term investigation rather than stock picking. A useful result must preserve where each claim came from, where sources disagree, and what evidence would change the thesis.",
     },
     {
-      label: "System",
-      title: "The application owns the facts.",
+      label: "Architecture",
+      title: "A durable workflow coordinates the research stages.",
       body:
-        "A durable background workflow coordinates claim extraction, theme formation, contradiction review, and thesis synthesis. Jobs, retries, leases, persistence, and confidence remain application responsibilities rather than model responsibilities.",
+        "Background jobs coordinate claim extraction, theme formation, contradiction review, and thesis synthesis. Retries, leases, persistence, and confidence are explicit application concerns, so the workflow can recover without asking the model to manage system state.",
     },
     {
-      label: "Guardrails",
-      title: "Structured output is only the first boundary.",
+      label: "Technical decision",
+      title: "The model proposes; the application verifies.",
       body:
-        "Strict schemas and deterministic validators reject unknown identifiers, unsupported numeric claims, companies absent from the evidence, generated URLs, trading instructions, and themes without enough source breadth.",
+        "Structured model output enters strict schemas and deterministic validators. The application rejects unknown identifiers, unsupported numeric claims, companies absent from the evidence, generated URLs, trading instructions, and themes without enough source breadth.",
+    },
+    {
+      label: "Reliability",
+      title: "Provenance survives every transformation.",
+      body:
+        "Source-to-claim relationships and contradictions are persisted alongside the research output. Provider, provenance, validator, and AI-boundary tests cover the places where a plausible response could otherwise become an unsupported fact.",
     },
   ],
   shipped: [
@@ -87,10 +94,11 @@ export const studyBuddyStudy = {
   slug: "study-buddy",
   eyebrow: "AI learning product · Independent project",
   title: "Study Buddy",
-  dek: "An adaptive system-design tutor that evaluates the reasoning behind an architectural decision, not a memorized answer.",
+  dek: "A system-design tutor that evaluates why a learner made an architecture decision, then adapts the next question.",
   summary:
-    "Study Buddy presents one consequential design decision, asks the learner to explain it, and responds with either a targeted concept bridge or a harder transfer question.",
-  role: "Product design, learning model, frontend, backend, and AI integration",
+    "System design is difficult to learn through recall alone: the important signal is how someone reasons under constraints. Study Buddy presents one consequential decision, evaluates the explanation, and chooses either a concept bridge or a harder transfer question.",
+  role: "Designed and built the product, learning model, frontend, backend, and AI integration",
+  status: "Live prototype",
   stack: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Docker", "OpenAI"],
   image: "/projects/study-buddy/homepage.png",
   imageAlt:
@@ -99,7 +107,7 @@ export const studyBuddyStudy = {
   demo: links.studyBuddyDemo,
   sections: [
     {
-      label: "Why",
+      label: "Problem",
       title: "Good system design is a chain of decisions.",
       body:
         "Traditional study tools reward recall. Study Buddy instead asks learners to justify a decision under constraints, so the next prompt can respond to the reasoning they actually demonstrated.",
@@ -109,6 +117,12 @@ export const studyBuddyStudy = {
       title: "Evidence accumulates; mastery is not guessed.",
       body:
         "Attempts append evidence across six dimensions. Deterministic projection owns mastery and review timing, while the AI supplies a bounded assessment that can fall back to a rubric when the model is unavailable.",
+    },
+    {
+      label: "Technical decision",
+      title: "Assessment and progression have separate owners.",
+      body:
+        "The AI evaluates a response within a structured schema, but deterministic application logic updates mastery and review timing. That boundary keeps one model response from directly rewriting the learner’s state.",
     },
     {
       label: "Reliability",
@@ -141,22 +155,23 @@ export const researchProjects = [
     number: "01",
     slug: "enso",
     shortTitle: "ENSO prediction",
-    title: "Climate networks and ENSO prediction",
+    title: "Predicting ENSO with climate networks",
     mentor: "Dr. Nishant Malik",
-    context: "Applied machine learning · 2022—2024",
+    context: "Network science + machine learning · 2022—2024",
     period: "2022—2024",
     area: "Complex networks · time series · machine learning",
-    question: "Can structure in climate networks support useful 12-month ENSO forecasts?",
-    summary: "Integrated climate-network analysis with machine learning for long-range El Niño–Southern Oscillation forecasting.",
-    methods: ["Time-series analysis", "Probabilistic methods", "Random Forests", "Complex-network metrics"],
-    tools: ["Python"],
-    evidence: ["500,000+ sea-surface-temperature observations", "75 years of historical data", "12-month forecast horizon"],
+    question: "Can the structure of global temperature relationships add useful signal to ENSO prediction?",
+    summary:
+      "Converted global surface-air temperature anomalies into network features, then tested what a Random Forest could—and could not—learn about ENSO.",
+    methods: ["Pearson correlation", "Climate-network metrics", "Random Forest regression", "Cross-validation"],
+    tools: [],
+    evidence: ["NCEP/NCAR Reanalysis I", "1948—2022 climate record", "Training MSE 0.342 · validation MSE 0.803"],
     source: links.ensoConferenceRecord,
     featured: true,
-    detailsNeeded: [
-      "The exact validation split and baseline",
-      "What the reported 95% accuracy measures",
-      "Findings that are approved for public use",
+    evidenceBoundary: [
+      "The number of cross-validation folds and temporal ordering are not documented in the supplied report.",
+      "The one-year training-window experiment predicts a different period and is not treated as directly comparable.",
+      "No programming language or unreported model hyperparameters are claimed here.",
     ],
   },
   {
@@ -174,11 +189,10 @@ export const researchProjects = [
     tools: [],
     evidence: [],
     source: links.jasmonicAdvisorRecord,
-    detailsNeeded: [
-      "Model equations and assumptions",
-      "Software or programming languages used",
-      "Findings and validation approach",
-      "Your individual implementation and analysis",
+    evidenceBoundary: [
+      "The model equations and assumptions are not included in the current public record.",
+      "The implementation tools are not publicly documented.",
+      "Findings, validation, and individual ownership are not claimed beyond the linked source.",
     ],
   },
   {
@@ -188,7 +202,7 @@ export const researchProjects = [
     title: "Cryptocurrencies and forward inflation rates",
     mentor: "Dr. Mary Lynn Reed",
     context: "Financial mathematics research",
-    period: "Date to add",
+    period: "Not publicly documented",
     area: "Financial mathematics",
     question: "What relationships exist between cryptocurrency markets and forward inflation rates?",
     summary: "Studied relationships between cryptocurrency markets and forward inflation rates.",
@@ -196,11 +210,10 @@ export const researchProjects = [
     tools: [],
     evidence: [],
     source: links.researchLinkedInPost,
-    detailsNeeded: [
-      "Research dates and dataset",
-      "Mathematical or statistical methods",
-      "Software or programming languages used",
-      "Findings and your individual contribution",
+    evidenceBoundary: [
+      "Research dates and the dataset boundary are not included in the current public record.",
+      "Methods and implementation tools are not publicly documented.",
+      "Findings and individual ownership are not claimed beyond the linked source.",
     ],
   },
   {
@@ -210,7 +223,7 @@ export const researchProjects = [
     title: "Mathematics graduation gaps",
     mentor: "Dr. Tony Wong · Dr. Kara L. Maki · Dr. Carol Marchetti",
     context: "School Action Team research",
-    period: "Date to add",
+    period: "Not publicly documented",
     area: "Mathematics education research",
     question: "What graduation gaps can be identified in RIT’s School of Mathematical Sciences?",
     summary: "Contributed to research examining graduation gaps in RIT’s School of Mathematical Sciences.",
@@ -218,11 +231,10 @@ export const researchProjects = [
     tools: [],
     evidence: [],
     source: links.researchLinkedInPost,
-    detailsNeeded: [
-      "Research dates and dataset boundary",
-      "Analytical methods",
-      "Tools or programming languages used",
-      "Findings and your individual contribution",
+    evidenceBoundary: [
+      "Research dates and the dataset boundary are not included in the current public record.",
+      "Analytical methods and implementation tools are not publicly documented.",
+      "Findings and individual ownership are not claimed beyond the linked source.",
     ],
   },
 ] as const;

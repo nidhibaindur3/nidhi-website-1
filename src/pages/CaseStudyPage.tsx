@@ -12,7 +12,7 @@ type CaseStudyPageProps = {
 export function CaseStudyPage({ study, onBack }: CaseStudyPageProps) {
   return (
     <main className="detail-page project-detail-page">
-      <DetailNavigation backLabel="Work" onBack={onBack} ariaLabel={`${study.title} links`}>
+      <DetailNavigation backLabel="Projects" onBack={onBack} ariaLabel={`${study.title} links`}>
         {study.repository && (
           <a href={study.repository} target="_blank" rel="noreferrer">
             <Code aria-hidden="true" /> Source
@@ -41,29 +41,79 @@ export function CaseStudyPage({ study, onBack }: CaseStudyPageProps) {
             </div>
             <div>
               <dt>Status</dt>
-              <dd>{study.demo ? "Live prototype" : "Working prototype"}</dd>
+              <dd>{study.status}</dd>
             </div>
           </dl>
+          <div className="mobile-project-actions" aria-label={`${study.title} project links`}>
+            {study.repository && (
+              <a href={study.repository} target="_blank" rel="noreferrer">
+                <Code aria-hidden="true" /> Source
+              </a>
+            )}
+            {study.demo && (
+              <a href={study.demo} target="_blank" rel="noreferrer">
+                Live product <ArrowUpRight aria-hidden="true" />
+              </a>
+            )}
+          </div>
         </header>
 
+        <section className="detail-section split-detail project-problem">
+          <div>
+            <p className="section-label">Engineering problem</p>
+            <h2>{study.sections[0].title}</h2>
+          </div>
+          <div className="prose">
+            <p>{study.summary}</p>
+            <p>{study.sections[0].body}</p>
+          </div>
+        </section>
+
         <figure className="project-detail-image">
-          <img src={study.image} alt={study.imageAlt} />
+          <div className="project-detail-media">
+            <img src={study.image} alt={study.imageAlt} />
+          </div>
           <figcaption>Current product interface.</figcaption>
         </figure>
 
-        <div className="engineering-walkthrough">
-          {study.sections.map((section) => (
-            <section key={section.label}>
-              <p className="section-label">{section.label}</p>
-              <h2>{section.title}</h2>
-              <p>{section.body}</p>
-            </section>
-          ))}
-        </div>
+        <section className="engineering-walkthrough" aria-labelledby="decision-record-title">
+          <div className="decision-record-intro">
+            <p className="section-label">Decision record</p>
+            <h2 id="decision-record-title">How the system holds together</h2>
+            <p>
+              Follow the architecture, ownership boundary, and reliability choices behind the
+              current product.
+            </p>
+            <nav className="decision-index" aria-label={`${study.title} engineering decisions`}>
+              {study.sections.slice(1).map((section, index) => (
+                <a href={`#${study.slug}-decision-${index + 1}`} key={section.label}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {section.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          <div className="decision-list">
+            {study.sections.slice(1).map((section, index) => (
+              <article id={`${study.slug}-decision-${index + 1}`} key={section.label}>
+                <div className="walkthrough-marker" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+                <div>
+                  <p className="section-label">{section.label}</p>
+                  <h3>{section.title}</h3>
+                  <p>{section.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section className="detail-section build-record">
           <div>
-            <p className="section-label">Implemented now</p>
+            <p className="section-label">Shipped now</p>
+            <h2>What the current system does</h2>
             <ul>
               {study.shipped.map((item) => (
                 <li key={item}>{item}</li>
@@ -71,7 +121,8 @@ export function CaseStudyPage({ study, onBack }: CaseStudyPageProps) {
             </ul>
           </div>
           <div>
-            <p className="section-label">Deliberately next</p>
+            <p className="section-label">Next engineering work</p>
+            <h2>Known production gaps</h2>
             <ul>
               {study.next.map((item) => (
                 <li key={item}>{item}</li>

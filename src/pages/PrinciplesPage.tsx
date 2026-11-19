@@ -10,8 +10,10 @@ export function PrinciplesPage({ onBack }: PrinciplesPageProps) {
   return (
     <main className="detail-page principles-detail-page">
       <DetailNavigation backLabel="About" onBack={onBack} ariaLabel="Portfolio">
+        <a href="/#about">About</a>
         <a href="/#work">Work</a>
         <a href="/#research-enso">Research</a>
+        <a href="/#daily-digest">Projects</a>
         <a href="/#contact">Contact</a>
       </DetailNavigation>
       <article>
@@ -76,7 +78,7 @@ export function PrinciplesPage({ onBack }: PrinciplesPageProps) {
             <p className="section-label">Return</p>
             <h2>Selected work</h2>
           </div>
-          <a href="/#work">
+          <a href="/#daily-digest">
             View projects <ArrowRight aria-hidden="true" />
           </a>
         </section>

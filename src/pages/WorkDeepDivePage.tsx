@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 
 import { DetailNavigation } from "@/src/components/portfolio/DetailNavigation";
+import { PrintPathVisual } from "@/src/components/portfolio/ProjectVisuals";
 import { links } from "@/src/content/portfolio";
 
 type WorkDeepDivePageProps = {
@@ -11,8 +12,9 @@ export function WorkDeepDivePage({ onBack }: WorkDeepDivePageProps) {
   return (
     <main className="detail-page work-detail-page">
       <DetailNavigation backLabel="Work" onBack={onBack} ariaLabel="Portfolio">
-        <a href="/#research-enso">Research</a>
         <a href="/#about">About</a>
+        <a href="/#research-enso">Research</a>
+        <a href="/#daily-digest">Projects</a>
         <a href="/#contact">Contact</a>
       </DetailNavigation>
 
@@ -21,8 +23,8 @@ export function WorkDeepDivePage({ onBack }: WorkDeepDivePageProps) {
           <p className="section-label">Ecolab · Software Engineer · July 2024—present</p>
           <h1>Prep N Print</h1>
           <p className="detail-dek">
-            Enterprise software spanning Azure services, data pipelines, APIs, a React Native
-            application, and label output across printer hardware.
+            Software that carries label state through Azure services, data pipelines, APIs, a
+            React Native application, and physical printer hardware.
           </p>
           <dl className="detail-meta">
             <div>
@@ -48,12 +50,14 @@ export function WorkDeepDivePage({ onBack }: WorkDeepDivePageProps) {
           <div className="prose">
             <p>
               Prep N Print supports food-label printing workflows in enterprise restaurant
-              environments. My work crosses the boundaries between deployment infrastructure,
-              data movement, application services, mobile rendering, and printer behavior.
+              environments. I built capabilities for Reprint Sharing and Restoration so label
+              information could be recovered across devices at 64,000 locations.
             </p>
             <p>
-              The public description intentionally stays at the system-surface level and omits
-              internal architecture, customer data, and operational details.
+              Solving that problem crossed deployment infrastructure, data movement, application
+              services, mobile rendering, and printer behavior. This public account stays at the
+              system-surface level and omits internal architecture, customer data, and operational
+              details.
             </p>
           </div>
         </section>
@@ -63,6 +67,9 @@ export function WorkDeepDivePage({ onBack }: WorkDeepDivePageProps) {
             <p className="section-label">System span</p>
             <h2>The parts of the system I worked across</h2>
             <p>This is a responsibility map, not a representation of Ecolab’s internal architecture.</p>
+          </div>
+          <div className="detail-system-visual">
+            <PrintPathVisual />
           </div>
           <div className="system-span" aria-label="Prep N Print engineering responsibility map">
             <div>
@@ -145,14 +152,14 @@ export function WorkDeepDivePage({ onBack }: WorkDeepDivePageProps) {
               and responsibilities, but not internal SLOs, incident data, or test metrics.
             </p>
           </div>
-          <div className="input-needed">
-            <p className="section-label">Details needed from Nidhi</p>
-            <h2>What would make this account stronger</h2>
+          <div className="evidence-boundary">
+            <p className="section-label">Public boundary</p>
+            <h2>What this account intentionally leaves out</h2>
             <ul>
-              <li>A difficult production bug and how you isolated it</li>
-              <li>A concrete trade-off or alternative you considered</li>
-              <li>Approved testing, observability, or performance details</li>
-              <li>A lesson or improvement you would make next</li>
+              <li>Customer-specific architecture and operational data</li>
+              <li>Internal service levels, incidents, and production metrics</li>
+              <li>Testing, observability, and performance details not approved for public use</li>
+              <li>Confidential implementation tradeoffs beyond the verified system surface</li>
             </ul>
           </div>
         </section>

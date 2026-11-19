@@ -2,10 +2,10 @@ export function PrintPathVisual() {
   return (
     <figure className="system-visual print-path-visual">
       <svg viewBox="0 0 820 520" role="img" aria-labelledby="print-title print-desc">
-        <title id="print-title">Prep N Print engineering responsibility map</title>
+        <title id="print-title">Prep N Print reprint restoration responsibility path</title>
         <desc id="print-desc">
-          A conceptual path connecting cloud and data, application services, mobile rendering, and
-          physical print output. It is not Ecolab's internal architecture.
+          A conceptual path connecting stored label state, restoration services, label rendering,
+          and physical print output. It is not Ecolab's internal architecture.
         </desc>
         <path
           className="path-line"
@@ -18,13 +18,13 @@ export function PrintPathVisual() {
         </g>
         <g className="system-node service-node">
           <rect x="280" y="188" width="120" height="120" />
-          <text x="340" y="243">APIs +</text>
+          <text x="340" y="243">RESTORE +</text>
           <text x="340" y="267">QUEUES</text>
         </g>
         <g className="system-node mobile-node">
           <rect x="550" y="318" width="116" height="150" rx="30" />
           <line x1="582" y1="438" x2="634" y2="438" />
-          <text x="608" y="375">MOBILE</text>
+          <text x="608" y="375">LABEL</text>
           <text x="608" y="399">RENDER</text>
         </g>
         <g className="printer">
@@ -33,52 +33,72 @@ export function PrintPathVisual() {
           <path d="M718 350h48M718 368h36M718 386h42" />
         </g>
       </svg>
-      <figcaption>Responsibility map — not internal architecture.</figcaption>
+      <figcaption>Reprint restoration responsibility path — not internal architecture.</figcaption>
     </figure>
   );
 }
 
 export function EnsoVisual() {
-  const nodes = [
-    [80, 170],
-    [155, 88],
-    [210, 210],
-    [292, 118],
-    [360, 238],
-    [442, 78],
-    [498, 184],
-    [590, 112],
-    [650, 226],
-    [725, 142],
-  ];
-
   return (
     <figure className="system-visual enso-visual">
       <svg viewBox="0 0 820 470" role="img" aria-labelledby="enso-title enso-desc">
-        <title id="enso-title">Conceptual climate network and time series</title>
+        <title id="enso-title">ENSO climate-network prediction pipeline</title>
         <desc id="enso-desc">
-          Connected observation points sit above a climate signal, illustrating the combination of
-          complex-network structure and time-series analysis.
+          Global surface-air temperature anomalies are regridded, converted into a correlation
+          network, summarized with graph metrics, and supplied to a Random Forest that predicts the
+          Oceanic Niño Index.
         </desc>
-        <g className="network-links">
-          <path d="M80 170L155 88 210 210 292 118 360 238 442 78 498 184 590 112 650 226 725 142" />
-          <path d="M80 170L210 210 360 238 498 184 650 226M155 88L292 118 442 78 590 112 725 142M210 210L292 118M442 78L498 184M590 112L650 226" />
+        <g className="enso-flow-lines">
+          <path d="M250 190H326M503 190H584" />
+          <path d="M308 176l18 14-18 14M566 176l18 14-18 14" />
         </g>
-        <g className="network-nodes">
-          {nodes.map(([cx, cy]) => (
-            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="9" />
-          ))}
+        <g className="enso-globe">
+          <circle cx="145" cy="190" r="103" />
+          <ellipse cx="145" cy="190" rx="48" ry="103" />
+          <path d="M42 190h206M61 138h168M61 242h168M145 87v206" />
+          <g className="enso-grid-nodes">
+            <circle cx="74" cy="138" r="6" />
+            <circle cx="117" cy="106" r="6" />
+            <circle cx="171" cy="116" r="6" />
+            <circle cx="216" cy="151" r="6" />
+            <circle cx="93" cy="205" r="6" />
+            <circle cx="151" cy="184" r="6" />
+            <circle cx="205" cy="224" r="6" />
+            <circle cx="122" cy="261" r="6" />
+          </g>
         </g>
-        <path
-          className="signal"
-          d="M58 356C94 356 96 306 132 306s37 79 73 79 37-52 73-52 37-92 73-92 37 139 73 139 37-50 73-50 37 29 73 29 37-97 73-97 37 75 73 75 37-26 73-26"
-        />
-        <text x="58" y="430">75 YEARS OF OBSERVATIONS</text>
-        <text x="612" y="430">12-MONTH HORIZON</text>
+        <g className="enso-network">
+          <path d="M355 128L407 92 468 122 485 190 453 252 383 264 338 216zM355 128L453 252M407 92L383 264M468 122L338 216M485 190L355 128M338 216L468 122M407 92L485 190" />
+          <circle cx="355" cy="128" r="10" />
+          <circle cx="407" cy="92" r="10" />
+          <circle cx="468" cy="122" r="10" />
+          <circle cx="485" cy="190" r="10" />
+          <circle cx="453" cy="252" r="10" />
+          <circle cx="383" cy="264" r="10" />
+          <circle cx="338" cy="216" r="10" />
+          <circle className="enso-feature-node" cx="423" cy="184" r="18" />
+        </g>
+        <g className="enso-model">
+          <path d="M611 120h150v140H611z" />
+          <path d="M636 225l22-28 21 13 26-53 29 36" />
+          <circle cx="636" cy="225" r="5" />
+          <circle cx="658" cy="197" r="5" />
+          <circle cx="679" cy="210" r="5" />
+          <circle cx="705" cy="157" r="5" />
+          <circle cx="734" cy="193" r="5" />
+        </g>
+        <g className="enso-step-labels">
+          <text x="42" y="345">01 / REGRID</text>
+          <text x="42" y="371">GLOBAL SATA</text>
+          <text x="326" y="345">02 / CONNECT</text>
+          <text x="326" y="371">|CORRELATION| &gt; 0.05</text>
+          <text x="584" y="345">03 / PREDICT</text>
+          <text x="584" y="371">GRAPH METRICS → ONI</text>
+        </g>
+        <path className="enso-rule" d="M42 407H761" />
+        <text className="enso-finding" x="42" y="439">LOCAL CLUSTERING EMERGED AS THE STRONGEST FEATURE</text>
       </svg>
-      <figcaption>
-        Conceptual method visual: connected climate observations + time-dependent signal.
-      </figcaption>
+      <figcaption>Method reconstructed from the 2023 symposium poster and 2024 project report.</figcaption>
     </figure>
   );
 }

@@ -14,8 +14,9 @@ export function ResearchProjectPage({ project, onBack }: ResearchProjectPageProp
   return (
     <main className="detail-page research-project-page">
       <DetailNavigation backLabel="Research" onBack={onBack} ariaLabel="Portfolio">
-        <a href="/#work">Work</a>
         <a href="/#about">About</a>
+        <a href="/#work">Work</a>
+        <a href="/#daily-digest">Projects</a>
         <a href="/#contact">Contact</a>
       </DetailNavigation>
 
@@ -68,11 +69,11 @@ export function ResearchProjectPage({ project, onBack }: ResearchProjectPageProp
         )}
 
         <section className="detail-section two-up-detail">
-          <div className="input-needed">
-            <p className="section-label">Details needed from Nidhi</p>
-            <h2>Complete the technical account</h2>
+          <div className="evidence-boundary">
+            <p className="section-label">Evidence boundary</p>
+            <h2>What this public note does not claim</h2>
             <ul>
-              {project.detailsNeeded.map((detail) => (
+              {project.evidenceBoundary.map((detail) => (
                 <li key={detail}>{detail}</li>
               ))}
             </ul>

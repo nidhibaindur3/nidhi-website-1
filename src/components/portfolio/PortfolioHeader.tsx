@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 import { chapters, navigation } from "@/src/content/portfolio";
@@ -10,27 +10,82 @@ type PortfolioHeaderProps = {
 
 export function PortfolioHeader({ active, onNavigate }: PortfolioHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
+  const restoreMenuFocusRef = useRef(true);
   const activeGroup = chapters[active]?.nav;
 
   useEffect(() => {
     if (!menuOpen) return;
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+    const storyTrack = document.querySelector<HTMLElement>(".story-track");
+    const previousOverflow = document.body.style.overflow;
+    const focusFirstLink = window.setTimeout(() => {
+      mobileNavRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    }, 200);
+
+    storyTrack?.setAttribute("inert", "");
+    document.body.style.overflow = "hidden";
+
+    const handleMenuKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        restoreMenuFocusRef.current = true;
+        setMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = [
+        menuTriggerRef.current,
+        ...Array.from(mobileNavRef.current?.querySelectorAll<HTMLElement>("a[href]") ?? []),
+      ].filter((element): element is HTMLElement => Boolean(element));
+      const currentIndex = focusable.indexOf(document.activeElement as HTMLElement);
+
+      if (event.shiftKey && currentIndex <= 0) {
+        event.preventDefault();
+        focusable.at(-1)?.focus();
+      } else if (!event.shiftKey && currentIndex === focusable.length - 1) {
+        event.preventDefault();
+        focusable[0]?.focus();
+      }
     };
 
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleMenuKeyDown);
+    return () => {
+      window.clearTimeout(focusFirstLink);
+      window.removeEventListener("keydown", handleMenuKeyDown);
+      storyTrack?.removeAttribute("inert");
+      document.body.style.overflow = previousOverflow;
+
+      if (restoreMenuFocusRef.current) {
+        window.requestAnimationFrame(() => menuTriggerRef.current?.focus());
+      }
+      restoreMenuFocusRef.current = true;
+    };
   }, [menuOpen]);
 
   const navigate = (index: number) => {
+    const targetId = chapters[index]?.id;
+    if (menuOpen) restoreMenuFocusRef.current = false;
     setMenuOpen(false);
     onNavigate(index);
+
+    if (menuOpen && targetId) {
+      window.requestAnimationFrame(() => {
+        document.getElementById(targetId)?.focus({ preventScroll: true });
+      });
+    }
   };
 
   return (
     <header className="topbar">
-      <button className="wordmark" onClick={() => navigate(0)} aria-label="Return to introduction">
+      <button
+        className="wordmark"
+        onClick={() => navigate(0)}
+        aria-label="Return to introduction"
+        tabIndex={menuOpen ? -1 : 0}
+      >
         <strong>Nidhi Baindur</strong>
       </button>
 
@@ -64,6 +119,7 @@ export function PortfolioHeader({ active, onNavigate }: PortfolioHeaderProps) {
       </a>
 
       <button
+        ref={menuTriggerRef}
         className="menu-trigger"
         aria-expanded={menuOpen}
         aria-controls="mobile-navigation"
@@ -74,9 +130,11 @@ export function PortfolioHeader({ active, onNavigate }: PortfolioHeaderProps) {
       </button>
 
       <nav
+        ref={mobileNavRef}
         id="mobile-navigation"
         className="mobile-nav"
         data-open={menuOpen}
+        aria-hidden={!menuOpen}
         aria-label="Mobile portfolio chapters"
       >
         <div>
@@ -92,6 +150,7 @@ export function PortfolioHeader({ active, onNavigate }: PortfolioHeaderProps) {
                   navigate(item.chapterIndex);
                 }}
                 aria-current={current ? "location" : undefined}
+                data-active={current}
               >
                 {item.label}
               </a>
